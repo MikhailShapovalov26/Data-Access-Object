@@ -18,8 +18,10 @@ public class Orders implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date date;
-    private long customer_id;
-    private String product_name;
+    @Column(name="customer_id")
+    private long customerId;
+    @Column(name= "product_name")
+    private String productName;
     private long amount;
 
 
