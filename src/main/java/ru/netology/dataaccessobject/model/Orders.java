@@ -21,9 +21,10 @@ public class Orders {
     private Long id;
     private Date date;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id") // правильное имя колонки в таблице orders
+    @JoinColumn(name = "customer_id")
     private Customer customer;
-    private String product_name;
+    @Column(name= "product_name")
+    private String productName;
     private long amount;
 
 
