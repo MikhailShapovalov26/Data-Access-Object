@@ -1,0 +1,14 @@
+CREATE TABLE CUSTOMERS (
+   id SERIAL PRIMARY KEY,
+   name VARCHAR(50) NOT NULL,
+   surname VARCHAR(50) NOT NULL,
+   age int,
+   phone_number VARCHAR(50) NOT NULL
+);
+CREATE TABLE ORDERS(
+   id SERIAL PRIMARY KEY,
+   date DATE DEFAULT CURRENT_DATE,,
+   customer_id INT REFERENCES CUSTOMERS(id) ON DELETE CASCADE,
+   product_name VARCHAR(50) NOT NULL,
+   amount numeric NOT NULL
+);
