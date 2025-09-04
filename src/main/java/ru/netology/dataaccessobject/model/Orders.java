@@ -7,22 +7,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Id;
 
+import java.io.Serializable;
 import java.util.Date;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Data
 @Entity
-@Table(name = "orders")
-public class Orders {
+@Table(name = "ORDERS")
+public class Orders implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date date;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id") // правильное имя колонки в таблице orders
-    private Customer customer;
+    private long customer_id;
     private String product_name;
     private long amount;
 
