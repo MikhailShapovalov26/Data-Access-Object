@@ -1,7 +1,9 @@
 package ru.netology.dataaccessobject.repository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
@@ -13,11 +15,9 @@ import java.util.stream.Collectors;
 
 @Repository
 public class CustomerRepository {
-    private final JdbcTemplate jdbcTemplate;
 
-    public CustomerRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private static String read(String scriptFileName) {
         try (InputStream is = new ClassPathResource(scriptFileName).getInputStream();
@@ -27,9 +27,12 @@ public class CustomerRepository {
             throw new RuntimeException(e);
         }
     }
-    public List<String> getProductName(String name) {
+    @Transactional
+    public List getProductName(String name) {
         String sql = read("join.sql");
-        System.out.println(sql);
-        return jdbcTemplate.queryForList(sql, String.class, name);
+        return entityManager.createNativeQuery(sql)
+                .setParameter(1, name)
+                .getResultList();
+
     }
 }
